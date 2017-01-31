@@ -1,0 +1,5 @@
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\DAL.Interface\bin\Debug\DAL.Interface.dll
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\DAL.Interface\bin\Debug\DAL.Interface.pdb
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\DAL.Interface\obj\Debug\DAL.Interface.csprojResolveAssemblyReference.cache
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\DAL.Interface\obj\Debug\DAL.Interface.dll
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\DAL.Interface\obj\Debug\DAL.Interface.pdb

@@ -1,0 +1,95 @@
+﻿@model MvcPL.Models.PagingViewModel<MvcPL.Models.TestViewModel>
+@using MvcPL.Infrastructure
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<script>
+    $(document).ready(function() {
+        $('.btn-default').click(function() {
+            var chosenPage = this.innerHTML;
+            $.ajax({
+                type: "GET",
+                url: "Home/Index",
+                data: { page: chosenPage },
+                success: function(content) {
+                    window.scrollTo(0,0);
+                    $('#TestContainer').html(content);
+                    $(".btn").removeClass("btn-primary selected");
+                    $("#page" + chosenPage + "").addClass("btn-primary selected");
+                }
+            });
+            return false;
+        });
+    });
+
+    $(document).ready(function() {
+        $('.btn-success').click(function() {
+            if (!$("#seachText").val()) {
+                return false;
+            }
+            var searchText = $("#seachText").val();
+            var chosenPage = this.innerHTML;
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("Search", "Home")',
+                data: { seachText: searchText, page: chosenPage },
+                success: function(content) {
+                    window.scrollTo(0, 0);
+                    $(".error-search").css('display', 'none');
+                    $('#TestContainer').html(content);
+                    $('.pagingDiv').empty();
+                    $(".pagingDiv").append("<form action='' method='get'>" +
+                            "<input type='submit' class='btn btn-info' value='All tests' /></form>");
+                },
+                error: function () {
+                    $(".error-search").css('display', 'block');
+                }
+            });
+            return false;
+        }
+        );
+    });
+
+</script>
+<div class="col-lg-10">
+    @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+    {
+   <!-- <div style="text-align: center">
+        <div class="input-group">
+            <input class="form-control" name="seachText" id="seachText" placeholder="Search for...">
+            <span class="input-group-btn">
+                <input type="submit" class="btn btn-success" value="Search!" />
+            </span>
+        </div>
+    </div> -->
+    }
+</div>
+<div class="error-search" style="display:none">
+    <div class="alert alert-danger">
+        Not found the tests according to the criteria!
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <h2 style="text-align: center">Tests</h2>
+        <hr />
+    </div>
+</div>
+        <div class="row">
+            <div id="TestContainer">
+                @Html.Partial("ContentPartial")
+            </div>
+        </div>
+        <br /><br /><br />
+        <div class="row">
+            <div class="btn-group form-group col-md-offset-5 col-sm-offset-5 col-xs-offset-5 pagingDiv">
+                @Html.PageLink(Model.Paging, x => Url.Action("Index", new { page = x }))
+            </div>
+        </div>
+<br />
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

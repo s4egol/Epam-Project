@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Details";
+}
+
+
+@model MvcPL.Models.UserEditorViewModel
+@{
+    ViewBag.Title = "Details";
+}
+<script>
+    function changePassword() {
+        $("#currentPass").css('display', 'block');
+        $("#newPass").css('display', 'block');
+        $("#confirmedNewPass").css('display', 'block');
+        $("#change-password").css('display', 'block');
+    }
+</script>
+@using (Html.BeginForm("Details", "User", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+{
+    <h2>
+    @Model.NickName
+    </h2>
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.NickName)
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3>Info user</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Name", @required = true })
+                    @Html.ValidationMessageFor(model => model.Name, null, new { @class = "col-md-2 text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Surname, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Surname, new { @class = "form-control", @placeholder = "Surname", @required = true })
+                    @Html.ValidationMessageFor(model => model.Surname, null, new { @class = "col-md-2 text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <i class="col-md-offset-5" onclick="changePassword()"> Change Password</i>
+    </div>
+    <div class="panel panel-info" id="change-password" style="display: none">
+        <div class="panel-heading">
+            <h3>Change password</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group" id="currentPass" style="display: none">
+                <label class="col-md-2 control-label">Old password</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.OldPassword, new { @class = "form-control", placeholder = "Old password", required = true, type = "password" })
+                    @Html.ValidationMessageFor(model => model.OldPassword, null, new { @class = "col-md-3 text-danger" })
+                </div>
+            </div>
+            <div class="form-group" id="newPass" style="display: none">
+                <label class="col-md-2 control-label">New password</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.NewPassword, new { @class = "form-control", placeholder = "New password", required = true, type = "password" })
+                    @Html.ValidationMessageFor(model => model.NewPassword, null, new { @class = "col-md-3 text-danger" })
+                </div>
+            </div>
+            <div class="form-group" id="confirmedNewPass" style="display: none">
+                <label class="control-label col-md-2">Confirm new password</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ConfirmNewPassword, new { @class = "form-control", placeholder = "Confirm new password", required = true, type = "password" })
+                    @Html.ValidationMessageFor(model => model.ConfirmNewPassword, null, new { @class = "col-md-3 text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-primary" value="Save" />
+                </div>
+            </div>      
+    <br />
+    }
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

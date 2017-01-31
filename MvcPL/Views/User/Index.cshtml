@@ -1,0 +1,142 @@
+﻿@model IEnumerable<MvcPL.Models.FullUserViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<script>
+    $(document).ready(function() {
+        $("#searchUserButton").click(function() {
+            if (!$("#nickName").val()) {
+                return false;
+            }
+            var nickname = $("#nickName").val();
+            $('#loading').show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SearchNickname", "User")',
+                data: { nickName: nickname },
+                dataType: "json",
+                success: function(user) {
+                    $('#loading').hide();
+                    $("#nickName").val('');
+                    document.getElementById("resultSearch").remove();
+                        $(".userContainer").append("<div id='resultSearch'><table class='table table-striped'><tbody><tr>" +
+                            "<th class='col-md-2'>Name</th>" +
+                            "<th class='col-md-2'>Surname</th>" +
+                            "<th class='col-md-2'>Nickname</th>" +
+                            "<th class='col-md-1'></th>" +
+                            "<tr><th><label>" + user.Name + "</label></th>" +
+                            "<th><label>" + user.Surname + "</label></th>" +
+                            "<th><label>" + user.NickName + "</label></th>" +
+                            "<th><form action='/User/Edit' method='get'>" +
+                            "<input type='hidden' name='Id' id='Id' value='" + user.Id + "' />" +
+                            "<button type='submit' class='btn btn-info'>Edit</button></form></th></tr>"
+                            );
+
+                },
+                error: function () {
+                    $('#loading').hide();
+                    $("#nickName").val('');
+                    document.getElementById("resultSearch").remove();
+                    $(".userContainer").append("<div id='resultSearch'><div class='alert alert-danger'>" +
+                        "User with this nickname not found.</div></div>");
+                }
+            });
+            return false;
+        }
+        );
+    });
+
+</script>
+
+<h2>User management</h2>
+
+@using (Html.BeginForm("SearchNickname", "User", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", @id = "formUser" }))
+{
+<div class="row">
+    <!--div class="col-md-6"-->
+    <div id="custom-search-input">
+        <div class="input-group col-lg-4 col-md-5">
+            <input type="text" class="form-control input-lg" id="nickName" name="nickName" placeholder="User" />
+            <span class="input-group-btn">
+                <button class="btn btn-info btn-lg" id="searchUserButton" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+    <!--div-->
+</div>
+} 
+<br/>
+<div class="col-md-6 col-md-offset-5" id="loading" style="display: none">
+    <img src="/UserContent/loading.gif" height="128px" width="128px" />
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="userContainer">
+            <div id="resultSearch">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th class="col-md-2">
+                                Name
+                            </th>
+                            <th class="col-md-2">
+                                Surname
+                            </th>
+                            <th class="col-md-2">
+                                Nickname
+                            </th>
+                            <th class="col-md-2">
+                                Date added
+                            </th>
+                            <th class="col-md-3">
+                                Roles
+                            </th>
+                            <th class="col-md-1">
+                            </th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            if (item.NickName != User.Identity.Name)
+                            {
+                            <tr>
+                                <th>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayFor(modelItem => item.Surname)
+                                </th>
+                                <th>
+                                    @Html.DisplayFor(modelItem => item.NickName)
+                                </th>
+                                <th>
+                                    @Html.DisplayFor(modelItem => item.JoinTime)
+                                </th>
+                                <td>
+                                    <ul class="list-inline">
+                                        @foreach (var role in item.Roles)
+                                        {
+                                            <li> @Html.DisplayFor(modelItem => role.Name)</li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+
+

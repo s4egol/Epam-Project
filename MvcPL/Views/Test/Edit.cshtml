@@ -1,0 +1,80 @@
+﻿@model MvcPL.Models.FullTestViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<script>
+    function Display(which)
+    {
+        id = which.id;
+        time = document.getElementById("withTime");
+        notTime = document.getElementById("withoutTime");
+        if (id == "displayBlock") time.style.display = "block";
+        else time.style.display = "none";
+        if (id == "displayNone") notTime.style.display = "block";
+        else notTime.style.display = "none";
+    }
+</script>
+
+<h2>Update test</h2>
+
+@using (Html.BeginForm("Edit", "Test", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <h4>Update existing test.</h4>
+    <hr />
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group">
+        @Html.HiddenFor(x => x.TestName)
+        @Html.LabelFor(model => model.TestName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.TestName)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Description", @required = true })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label(" ", new { @class = "col-md-2 control-label" })
+        <div class="dropdown">
+            <div class="col-md-10">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    Type of test
+                    <i class="caret"></i>
+                    <br />
+                </button>
+                <ul class="dropdown-menu">
+                    <li id="displayBlock" onClick="Display(this);"><a>With time</a></li>
+                    <li id="displayNone" onClick="Display(this);"><a>Without time</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="withTime" style="display:none" class="form-group">
+        @Html.LabelFor(model => model.TimeSec, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.TimeSec, new { @class = "form-control", @required = true, Value = "0" })
+            @Html.ValidationMessageFor(model => model.TimeSec, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div id="withoutTime" style="display:none"> </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Update test" />
+        </div>
+    </div>
+    <br />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+

@@ -1,0 +1,99 @@
+﻿@model MvcPL.Models.FullTestViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3>Test description</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th class="col-md-4">
+                                Name
+                            </th>
+                            <th class="col-md-5">
+                                Description
+                            </th>
+                            <th class="col-md-3">
+                                Actions
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                @Html.DisplayFor(modelItem => Model.TestName)
+                            </th>
+                            <th>
+                                @Html.DisplayFor(modelItem => Model.Description)
+                            </th>
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", "Test", new { idTest = Model.Id }, null) |
+                                @Html.ActionLink("Edit", "Edit", "Test", new { nameTest = Model.TestName }, null) |
+                                @Html.ActionLink("Add question", "Create", "Question", new { id = Model.Id }, null)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3>All test questions</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th class="col-md-1">
+                                №
+                            </th>
+                            <th class="col-md-8">
+                                Question
+                            </th>
+                            <th class="col-md-2">
+                                Quantity point
+                            </th>
+                            <th class="col-md-1">
+                                Actions
+                            </th>
+                        </tr>
+                        @{
+                            int counter = 0;
+                        }
+                        @foreach (var item in Model.Questions)
+                        {
+                            counter++;
+                            <tr>
+                                <th>
+                                    @counter
+                                </th>
+                                <th>
+                                    @Html.DisplayFor(modelItem => item.QuestionContent)
+                                </th>
+                                <th>
+                                    @Html.DisplayFor(modelItem => item.QuantityPoint)
+                                </th>
+                                <th>
+                                    <ul class="list-inline">
+                                        <li>@Html.ActionLink("Edit", "Edit", "Question", new { idQuestion = item.Id }, null)</li>
+                                        <li>@Html.ActionLink("Delete", "Delete", "Question", new { idQuestion = item.Id }, null)</li>
+                                    </ul>
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br />

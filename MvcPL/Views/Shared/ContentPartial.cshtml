@@ -1,0 +1,26 @@
+﻿@model MvcPL.Models.PagingViewModel<MvcPL.Models.TestViewModel>
+
+@foreach (var item in Model.Items)
+{
+    <div class="form-group">
+        <div class="col-md-4">
+            <div class="test">
+                <img class="test_icon" src="~/content/image/test_icon.png" alt="">
+                <div class="test_title">
+                    <div class="vert_align">
+                        <div class="subject">
+                            <span>@item.TestName</span>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="description">
+                    <p>@item.Description</p>
+                </div>
+                <div class="button_holder">
+                    @Html.ActionLink("Run test", "GetATestQuestion", "Test", new { idTest = item.Id}, null)
+                </div>
+            </div>
+        </div>
+    </div>
+}

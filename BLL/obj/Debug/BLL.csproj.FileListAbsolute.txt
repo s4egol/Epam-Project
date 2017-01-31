@@ -1,0 +1,9 @@
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\BLL\bin\Debug\BLL.dll
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\BLL\bin\Debug\BLL.pdb
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\BLL\bin\Debug\BLL.Interface.dll
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\BLL\bin\Debug\DAL.Interface.dll
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\BLL\bin\Debug\BLL.Interface.pdb
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\BLL\bin\Debug\DAL.Interface.pdb
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\BLL\obj\Debug\BLL.dll
+c:\users\s4egol\documents\visual studio 2015\Projects\KnowledgeTests\BLL\obj\Debug\BLL.pdb

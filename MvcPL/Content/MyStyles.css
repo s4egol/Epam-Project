@@ -1,0 +1,95 @@
+﻿div.test {
+    background: #46403c;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    padding: 10px;
+    display: inline-block;
+    zoom: 1;
+    margin-top: 10px;
+    width: 220px;
+    color: white;
+    padding-top: 0;
+    margin-left: 20px;
+    vertical-align: top;
+    position: relative;
+    height: 230px;
+}
+
+ div.test img.test_icon {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+}
+
+div.test div.test_title {
+    border-bottom: 1px solid #72645a;
+    padding: 10px 0;
+    height: 90px;
+}
+
+div.test div.test_title div.vert_align {
+    height: 90px;
+}
+
+div.vert_align > div.subject {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+div.test div.test_title span {
+    font-size: 18px;
+    font-weight: normal;
+    margin: 0 10px;
+    display: block;
+    font-family: Georgia, Arial, Helvetica, sans-serif;
+    font-weight: 100;
+}
+
+div.clear {
+    clear: both;
+}
+
+div.test div.description {
+    height: 85px;
+    overflow: hidden;
+}
+
+div.test p {
+    margin: 10px;
+    height: 66%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div.test div.button_holder {
+    text-align: center;
+    margin-top: 10px;
+}
+
+a.next_button, button.next_button {
+    background: url(/content/img/button_arrow.png) right center no-repeat;
+    padding: 0 13px 0 0;
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    zoom: 1;
+    height: 30px;
+    font-family: Georgia;
+    font-size: 14px;
+    border: 0;
+    cursor: pointer;
+}
+
+a.next_button > span, button.next_button > span {
+    background: url(/content/img/button_bg.png) left center repeat-x;
+    height: 20px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    display: inline-block;
+    zoom: 1;
+    padding: 5px 8px;
+}

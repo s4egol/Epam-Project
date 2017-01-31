@@ -1,0 +1,61 @@
+﻿@model MvcPL.Models.FullQuestionViewModel
+
+<hr />
+<h2>
+    Answer this question and move to the next:
+</h2>
+
+<input type="hidden" name="Id" value="@Model.Id" class="idQuestionHidden" />
+<input type="hidden" name="QuestionContent" value="@Model.QuestionContent" class="questionContentHidden" />
+<input type="hidden" name="TestId" value="@Model.TestId" class="testId" />
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h2>
+            <span class="label label-success">
+                @Html.DisplayFor(m => m.QuestionContent, new { @class = "form-control" })
+            </span>
+        </h2>
+    </div>
+</div>
+<br />
+@{
+    int numberAnswer = -1;
+    int numberCheckbox;
+    int countAnswer = 0;
+    foreach (var item in Model.Answers)
+    {
+        if (item.IsTrue)
+        {
+            countAnswer++;
+        }
+    }
+}
+@foreach (var item in Model.Answers)
+{
+    numberAnswer++;
+    numberCheckbox = numberAnswer + 1;
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="answers">
+                <div class="input-group">
+                    @if (countAnswer > 1)
+                    {
+                        <span class="input-group-addon">
+                            <input type="checkbox" id="checkboxes" class="checkboxes" value="@numberCheckbox" name="isTrueAnswers" aria-label="Checkbox for following text input">
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="input-group-addon">
+                            <input type="radio" id="checkboxes" class="checkboxes" value="@numberCheckbox" name="isTrueAnswers" aria-label="Radio button for following text input">
+                        </span>
+                    }
+                    <input type="hidden" class="form-control answrs" id="answrs" name="answers" value="@item.ContentAnswer" />
+                    <input type="text" class="form-control" id="@numberAnswer" name="visibleAnswers" value="@item.ContentAnswer" disabled="disabled" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+}

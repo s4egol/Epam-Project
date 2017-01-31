@@ -1,0 +1,65 @@
+﻿@model MvcPL.Models.FullQuestionViewModel
+@{
+    ViewBag.Title = "GetATestQuestion";
+}
+
+<script>
+    $(document).ready(function () {
+        $('.toNext').attr("type", "button");
+        $('.toNext').click(function () {
+            var id = $(".idQuestionHidden").val();
+            var questionContent = $(".questionContentHidden").val();
+            var testId = $(".testId").val();
+            allAnswers = [];
+            ch3ckboxs = [];
+            var $checkboxes = $('.checkboxes');
+            $checkboxes.each(function () {
+                if ($(this).is(':checked')) {
+                    ch3ckboxs.push(this.value);
+                }
+                else
+                    ch3ckboxs.push(0);
+            });
+            var $answrs = $('.answrs');
+            $answrs.each(function () {
+                allAnswers.push(this.value)
+            });
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Reply", "Test")',
+                data: { Id: id, QuestionContent: questionContent, TestId: testId, isTrueAnswers: ch3ckboxs, answers: allAnswers },
+                success: function (content) {
+                    window.scrollTo(0, 0);
+                    $(".idQuestionHidden").val('');
+                    $(".questionContentHidden").val('');
+                    $(".testId").val('');
+                    $('#QuestionContainer').empty();
+                    $('#QuestionContainer').html(content);
+
+                    var htmlStr = $('#QuestionContainer').html();
+                    var res = htmlStr.indexOf("Result of test");
+                    if (res != -1)
+                        $(".toNext").remove();
+                },
+            });
+            return false;
+        }
+        );
+    });
+</script>
+
+@using (Html.BeginForm("Reply", "Test", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+{
+    <div class="row">
+        <div id="QuestionContainer">
+            @Html.Partial("QuestionContentPartial")
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-1 nextQuestion">
+            <input type="submit" value="Accept" class="btn btn-success toNext" />
+        </div>
+    </div>
+    <br />
+}
+

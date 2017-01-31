@@ -1,0 +1,72 @@
+﻿@model IEnumerable<MvcPL.Models.TestViewModel>
+@{
+    ViewBag.Title = "AllTest";
+}
+
+<h2>Test management</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th class="col-md-1">
+                        №
+                    </th>
+                    <th class="col-md-2">
+                        Test name
+                    </th>
+                    <th class="col-md-6">
+                        Description
+                    </th>
+                    <th class="col-md-3">
+                    </th>
+                </tr>
+                @{ 
+                    int counter = 0;
+                }
+                @foreach (var item in Model)
+                {
+                    counter++;
+                    <tr>
+                        <th>
+                            @counter
+                        </th>
+                        <th>
+                            @Html.DisplayFor(modelItem => item.TestName)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </th>                       
+                        <td>
+                        @using (Html.BeginForm("Publishing", "Test", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            <input id="@counter" name="Id" type="hidden" value="@item.Id" />
+                            <input id="@counter" name="TestName" type="hidden" value="@item.TestName" />
+                            <input id="@counter" name="Description" type="hidden" value="@item.Description" />
+                            <input id="@counter" name="UserId" type="hidden" value="@item.UserId" />
+                            <input id="@counter" name="Published" type="hidden" value="@item.Published" />
+                            <ul class="list-inline">
+                                <li>@Html.ActionLink("Show", "Show", new { idTest = item.Id })</li>
+                                @if (!item.Published)
+                                {
+                                    <li><button class="btn btn-danger" type="submit">Not published</button></li>
+                                }
+                                else
+                                {
+                                    <li><button class="btn btn-success" type="submit">Published</button></li>
+                                    }
+                            </ul>
+                        }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<br />
+
+
+
+

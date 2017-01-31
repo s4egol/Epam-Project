@@ -1,0 +1,107 @@
+﻿@model MvcPL.Models.FullQuestionViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<script>
+    function add_input() {
+        var inputs = $('.panel').children('.panel-body').children('.answers').children('.input-group').children('.form-control');
+        console.log(inputs.length);
+        if (inputs.length < 10) {
+            var new_id = inputs.length;
+            $('.answers').append('<div class="input-group" id="' + new_id + '"> <span class="input-group-addon"> <input type="checkbox" id="' +
+            new_id + '" value="' + new_id + '" name="isTrueAnswers" /></span> <input type="text" class="form-control" id="' + new_id + '" name="answers[' + new_id + ']" required /></div><br class="transfer" id="' + new_id + '" />');
+        }
+    }
+
+    function delete_input() {
+        var inputs = $('.panel').children('.panel-body').children('.answers').children('.input-group').children('.form-control');
+        if (inputs.length > 2) {
+            var delete_id = inputs.length - 1;
+            $('.panel').children('.panel-body').children('.answers').children('.input-group[ id = ' + delete_id + ']').remove();
+            $('.transfer[ id = ' + delete_id + ']').remove();
+        }
+    }
+</script>
+
+<h2>Create question</h2>
+
+@using (Html.BeginForm("Edit", "Question", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <h4>Create a new question.</h4>
+    <hr />
+    <div class="form-group">
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.TestId)
+        @Html.HiddenFor(model => model.QuestionContent)
+        @Html.LabelFor(model => model.QuestionContent, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.QuestionContent, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="panel panel-info col-md-offset-2">
+        <div class="panel-heading">
+            <h3 class="panel-title">Answers</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="col-md-1">
+                    <input type="button" class="btn btn-default" onclick="add_input()" value="Add" />
+                </div>
+                <div class="col-md-2">
+                    <input type="button" class="btn btn-default" onclick="delete_input()" value="Delete last" />
+                </div>
+            </div>
+            <div class="answers">
+                @{
+                    int i = -1;
+                }
+
+                @foreach (var item in Model.Answers)
+                {
+                    i++;
+                    <div class="input-group" id="@i">
+                        <span class="input-group-addon">
+                            @if (item.IsTrue == true)
+                            {
+                                <input type="checkbox" id="@i" value="@i" name="isTrueAnswers" checked />
+                            }
+                            else
+                            {
+                                <input type="checkbox" id="@i" value="@i" name="isTrueAnswers" />
+                            }
+                        </span>
+                        <input type="text" class="form-control" id="@i" value="@item.ContentAnswer" name="answers[@i]" required />
+                    </div>
+                    <br class="transfer" id="@i" />
+                }
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.QuantityPoint, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(model => model.QuantityPoint, new { @class = "form-control", @placeholder = "Rate", @required = true })
+            @Html.ValidationMessageFor(model => model.QuantityPoint, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Update" />
+        </div>
+    </div>
+                    }
+<div>
+    @Html.ActionLink("Back to List", "Show", "Test", new { idTest = Model.TestId }, null)
+</div>
+<br />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+

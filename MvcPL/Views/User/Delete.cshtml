@@ -1,0 +1,49 @@
+﻿@model MvcPL.Models.FullUserViewModel
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete user</h2>
+
+@using (Html.BeginForm("Delete", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+<h3>Are you sure you want to delete user with nickname @Model.NickName?</h3>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+    <div class="col-md-2">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Surname, new { @class = "col-md-2 control-label" })
+    <div class="col-md-2">
+        @Html.DisplayFor(model => model.Surname)
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.NickName, new { @class = "col-md-2 control-label" })
+    <div class="col-md-2">
+        @Html.DisplayFor(model => model.NickName)
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+    <div class="col-md-2">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" class="btn btn-default" value="Delete" />
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<br />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

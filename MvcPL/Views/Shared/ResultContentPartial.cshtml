@@ -1,0 +1,99 @@
+﻿@model MvcPL.Models.FullResultViewModel
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h3>Result of test (@Model.TestName)</h3>
+    </div>
+</div>
+
+@{
+    double val = 0;
+    double maxVal = 0;
+    foreach (var point in Model.Questions)
+    {
+        maxVal += point.QuantityPoint;
+        if (point.IsTrueQuestion)
+        {
+            val += point.QuantityPoint;
+        }
+    }
+    int exitResult = 0;
+    if (val > 0)
+    {
+        double result = val / maxVal;
+        result *= 10;
+        exitResult = (int)Math.Round(result, 0);
+    }
+}
+
+<div class="row">
+    <div class="col-md-7 col-md-offset-1">
+        <h3>Test scores <span class="label label-info">@exitResult</span> / 10</h3>
+    </div>
+</div>
+
+@foreach (var oneQuestion in Model.Questions)
+{
+    if (oneQuestion.IsTrueQuestion)
+    {
+        <div class="row">
+            <div class="col-md-7 col-md-offset-1">
+                <h4>
+                    <span class="label label-success">
+                        @oneQuestion.QuestionContent
+                    </span>
+                </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-7 col-md-offset-1">
+                <div class="alert alert-success">
+                    The answer given to the right!
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-7 col-md-offset-1">
+                <h4>
+                    <span class="label label-danger">
+                        @oneQuestion.QuestionContent
+                    </span>
+                </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-7 col-md-offset-1">
+                <div class="alert alert-danger">
+                    The answer given to the wrong!
+                </div>
+            </div>
+        </div>
+    }
+
+    foreach (var answer in oneQuestion.Answers)
+    {
+        <div class="row">
+            <div class="col-md-7 col-md-offset-1">
+                <div class="input-group">
+                    @if (answer.IsTrue)
+                    {
+                        <span class="input-group-addon">
+                            <input type="checkbox" checked disabled>
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="input-group-addon">
+                            <input type="checkbox" disabled>
+                        </span>
+                    }
+                    <input type="text" value="@answer.ContentAnswer" class="form-control" disabled>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+}
